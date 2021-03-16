@@ -1,6 +1,8 @@
 package com.sam.domain.model
 
-data class Location(
+import javax.inject.Inject
+
+data class Location @Inject constructor(
     val id: Int,
     val name: String
 )

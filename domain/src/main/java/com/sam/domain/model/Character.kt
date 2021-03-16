@@ -1,6 +1,8 @@
 package com.sam.domain.model
 
-data class Character(
+import javax.inject.Inject
+
+data class Character @Inject constructor(
     val episode: List<Episode>,
     val gender: String,
     val id: Int,
