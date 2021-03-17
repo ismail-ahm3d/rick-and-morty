@@ -1,9 +1,8 @@
-package com.sam.domain.model
+package com.sam.domain_module
 
 import javax.inject.Inject
 
 data class Character @Inject constructor(
-    val episode: List<Episode>,
     val gender: String,
     val id: Int,
     val image: String,
