@@ -1,6 +1,7 @@
 package com.sam.data.retrofit
 
-import com.sam.domain_module.ApiResponse
+import com.sam.domain.ApiResponse
+import com.sam.domain.Character
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

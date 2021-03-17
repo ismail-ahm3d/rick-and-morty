@@ -2,7 +2,8 @@ package com.sam.data.repository
 
 import com.sam.data.retrofit.ServiceApi
 import com.sam.data.util.Resource
-import com.sam.domain_module.ApiResponse
+import com.sam.domain.ApiResponse
+import com.sam.domain.Character
 import javax.inject.Inject
 
 class DefaultMainRepository @Inject constructor(
@@ -18,7 +19,12 @@ class DefaultMainRepository @Inject constructor(
         }
     }
 
-//    override suspend fun getCharacterById(id: Int): Resource<Character> {
-//        TODO("Not yet implemented")
-//    }
+    override suspend fun getCharacterById(id: Int): Resource<Character> {
+        return try {
+            val character = api.getCharacterById(id)
+            Resource.Success(character)
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Something went wrong..!!")
+        }
+    }
 }

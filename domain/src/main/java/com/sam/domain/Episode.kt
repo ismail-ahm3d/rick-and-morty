@@ -1,4 +1,4 @@
-package com.sam.domain_module
+package com.sam.domain
 
 import javax.inject.Inject
 

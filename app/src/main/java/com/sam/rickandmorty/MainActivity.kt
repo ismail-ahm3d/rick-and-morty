@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 is Resource.Success -> {
 
-                    val firstCharacterName = res.data?.results?.get(10)?.name
+                    val firstCharacterName = res.data?.results?.get(1)?.name
                     binding.textView.text = firstCharacterName
                 }
             }
