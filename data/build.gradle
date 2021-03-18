@@ -54,4 +54,12 @@ dependencies {
     // retrofit and Gson
     api "com.squareup.retrofit2:retrofit:$retrofit_version"
     api "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_android"
+
+    // Coroutine Lifecycle Scopes
+//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+//    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_runtime"
 }

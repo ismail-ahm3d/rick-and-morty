@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white_700">#DDDDDD</color>
+
+    <!-- Main colors-->
+    <color name="background">#001211</color>
+    <color name="logoTextColor">#08b2c9</color>
 </resources>
