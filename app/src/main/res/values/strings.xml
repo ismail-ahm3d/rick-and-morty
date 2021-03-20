@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Rick and Morty</string>
+    <string name="characters">Characters:</string>
+    <string name="load_fail">Couldn\'t load any data.</string>
+    <string name="try_again">Retry</string>
 </resources>
