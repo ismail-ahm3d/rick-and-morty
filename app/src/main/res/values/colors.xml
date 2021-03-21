@@ -22,5 +22,8 @@
     <color name="unknown">#6E6E6E</color>
 
     <!-- All Characters Fragment Colors-->
-    <color name="card_background">#000C0C</color>
+    <color name="card_background">#001C1C</color>
+
+    <!-- Splash Colors-->
+    <color name="splash_background">#191919</color>
 </resources>

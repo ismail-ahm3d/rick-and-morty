@@ -77,8 +77,8 @@ class MainFragment : Fragment() {
                     failureViewsVisibility(false)
                     progressBarVisibility(false)
 
-                    val characters = event.resultList
-                    mainAdapter.characters = characters
+                    val response = event.apiResponse
+                    mainAdapter.characters = response.results
                 }
                 is CharactersViewModel.CharacterEvent.Failure -> {
                     Log.d(TAG, "collectDataAndFeedToRecycler: ${event.errorText}")

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.sam.data.repository.DefaultMainRepository
 import com.sam.data.util.DispatcherProvider
 import com.sam.data.util.Resource
+import com.sam.domain.ApiResponse
 import com.sam.domain.Character
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,7 @@ class CharactersViewModel @Inject constructor(
 ) : ViewModel() {
 
     sealed class CharacterEvent {
-        class Success(val resultList: List<Character>) : CharacterEvent()
+        class Success(val apiResponse: ApiResponse) : CharacterEvent()
         class Failure(val errorText: String) : CharacterEvent()
         object Loading : CharacterEvent()
         object Empty : CharacterEvent()
@@ -37,9 +38,9 @@ class CharactersViewModel @Inject constructor(
                         CharacterEvent.Failure("Something went wrong..! ${response.message}")
                 }
                 is Resource.Success -> {
-                    val characters = response.data?.results
-                    if (characters != null)
-                        _characters.value = CharacterEvent.Success(characters)
+                    val charactersResponse = response.data
+                    if (charactersResponse != null)
+                        _characters.value = CharacterEvent.Success(charactersResponse)
                     else
                         _characters.value = CharacterEvent.Failure("UNKNOWN ERROR")
                 }
