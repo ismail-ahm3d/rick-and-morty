@@ -1,20 +1,21 @@
-package com.sam.rickandmorty.ui.main
+package com.sam.rickandmorty.ui.allcharacters
 
 import android.content.Context
-import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.DrawableTransformation
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.sam.domain.Character
+import com.sam.domain.Episode
 import com.sam.rickandmorty.R
+import com.sam.rickandmorty.databinding.AllCharacterItemBinding
 import com.sam.rickandmorty.databinding.MainCharacterItemBinding
 
-class MainCharactersAdapter : RecyclerView.Adapter<MainCharactersAdapter.MainCharacterHolder>() {
+class AllCharactersAdapter : RecyclerView.Adapter<AllCharactersAdapter.AllCharactersHolder>() {
 
     lateinit var context: Context
 
@@ -37,12 +38,12 @@ class MainCharactersAdapter : RecyclerView.Adapter<MainCharactersAdapter.MainCha
 
     override fun getItemCount(): Int = characters.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainCharacterHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllCharactersHolder {
 
         context = parent.context
 
-        return MainCharacterHolder(
-            MainCharacterItemBinding.inflate(
+        return AllCharactersHolder(
+            AllCharacterItemBinding.inflate(
                 LayoutInflater.from(context),
                 parent,
                 false
@@ -50,36 +51,34 @@ class MainCharactersAdapter : RecyclerView.Adapter<MainCharactersAdapter.MainCha
         )
     }
 
-    override fun onBindViewHolder(holder: MainCharacterHolder, position: Int) {
+    override fun onBindViewHolder(holder: AllCharactersHolder, position: Int) {
         val currentCharacter = characters[position]
         holder.bind(currentCharacter)
     }
 
-    inner class MainCharacterHolder(private val binding: MainCharacterItemBinding) :
+    private val TAG = "AllCharactersAdapter"
+
+    inner class AllCharactersHolder(private val binding: AllCharacterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(character: Character) {
             binding.apply {
                 characterName.text = character.name
-                characterStatus.text = character.status
                 checkAndSetStatusIcon(binding, character.status)
+                statusAndSpecies.text = "${character.status} - ${character.species}"
+                location.text = character.location.name
+//                firstEpisodeName.text = character.firstEpisode.name
+//                firstEpisodeName.isSelected = true
 
                 Glide
                     .with(context)
                     .load(character.image)
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(characterImage)
-
-                Glide
-                    .with(context)
-                    .load(character.image)
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .circleCrop()
-                    .into(circularCharacterImage)
+                    .into(binding.characterImage)
             }
         }
     }
 
-    private fun checkAndSetStatusIcon(binding: MainCharacterItemBinding, status: String) {
+    private fun checkAndSetStatusIcon(binding: AllCharacterItemBinding, status: String) {
         binding.apply {
             when (status) {
                 "Alive" -> {

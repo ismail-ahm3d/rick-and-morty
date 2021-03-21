@@ -15,7 +15,7 @@ data class Character @Inject constructor(
     @SerializedName("name")
     val name: String,
     @SerializedName("episode")
-    val episodes: List<Any>,
+    val episodes: List<String>,
     @SerializedName("species")
     val species: String,
     @SerializedName("status")
@@ -23,5 +23,6 @@ data class Character @Inject constructor(
     @SerializedName("type")
     val type: String,
     @SerializedName("url")
-    val url: String
+    val url: String,
+    var firstEpisode: Episode
 )

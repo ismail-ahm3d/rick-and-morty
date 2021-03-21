@@ -21,14 +21,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ServiceProvider {
 
-//    @Singleton
-//    @Provides
-//    fun provideGsonBuilder(): Gson {
-//        return GsonBuilder()
-//            .excludeFieldsWithoutExposeAnnotation()
-//            .create()
-//    }
-
     @Singleton
     @Provides
     fun provideRetrofitInstance(): Retrofit.Builder =

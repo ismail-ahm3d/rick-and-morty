@@ -26,7 +26,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/main_image_layer" />
+            android:background="@drawable/main_background_image_layer" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -59,6 +59,7 @@
         app:layout_constraintTop_toBottomOf="@id/mainImageContainer" />
 
     <View
+        android:id="@+id/seeAllBtn"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginEnd="16dp"
@@ -78,7 +79,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/charactersOverText"
-        tools:listitem="@layout/character_item" />
+        tools:listitem="@layout/main_character_item" />
 
     <ProgressBar
         android:id="@+id/progressBar"

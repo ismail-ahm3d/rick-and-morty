@@ -1,4 +1,4 @@
-package com.sam.rickandmorty.ui.main
+package com.sam.rickandmorty.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,15 +7,13 @@ import com.sam.data.util.DispatcherProvider
 import com.sam.data.util.Resource
 import com.sam.domain.Character
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class CharactersViewModel @Inject constructor(
     private val repository: DefaultMainRepository,
     private val dispatchers: DispatcherProvider
 ) : ViewModel() {

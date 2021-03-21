@@ -7,5 +7,5 @@ data class ApiResponse @Inject constructor(
     @SerializedName("info")
     val info: Info,
     @SerializedName("results")
-    val results: List<Character>
+    var results: List<Character>
 )

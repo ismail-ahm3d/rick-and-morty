@@ -9,7 +9,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="2.5:3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,20 +33,37 @@
                 tools:src="@drawable/rick" />
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/main_image_layer" />
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/main_character_image_layer"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/circularCharacterImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:elevation="16dp"
+                app:layout_constraintBottom_toTopOf="@id/characterName"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="@id/rightGuide"
+                app:layout_constraintStart_toStartOf="@id/leftGuide"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/rick" />
 
             <TextView
                 android:id="@+id/characterName"
                 style="@style/CharacterName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:elevation="8dp"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
                 app:layout_constraintBottom_toTopOf="@id/characterStatus"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/circularCharacterImage"
                 tools:text="Rick Sanchez" />
 
             <TextView
@@ -53,10 +71,11 @@
                 style="@style/Status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:paddingHorizontal="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/statusIcon"
+                app:layout_constraintTop_toBottomOf="@id/characterName"
                 tools:text="Alive" />
 
             <View
@@ -67,8 +86,22 @@
                 app:layout_constraintBottom_toBottomOf="@id/characterStatus"
                 app:layout_constraintEnd_toStartOf="@id/characterStatus"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintTop_toTopOf="@id/characterStatus"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/characterStatus" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/leftGuide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.20" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/rightGuide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.80" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,4 +3,7 @@
     <string name="characters">Characters:</string>
     <string name="load_fail">Couldn\'t load any data.</string>
     <string name="try_again">Retry</string>
+    <string name="filter">Filter</string>
+    <string name="last_known_location">Last known location:</string>
+    <string name="first_see_in">First see in:</string>
 </resources>

@@ -14,10 +14,13 @@
     <color name="background">#001211</color>
     <color name="logoTextColor">#08b2c9</color>
 
-    <color name="mainCharacterItemLayer">#aa001211</color>
+    <color name="mainCharacterItemLayer">#ee001211</color>
 
     <!-- Status Icon Colors-->
     <color name="alive">#47bb44</color>
     <color name="dead">#FF3636</color>
     <color name="unknown">#6E6E6E</color>
+
+    <!-- All Characters Fragment Colors-->
+    <color name="card_background">#000C0C</color>
 </resources>
