@@ -94,7 +94,7 @@
                 android:id="@+id/LastLocation"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/FirstEpisode"
+                app:layout_constraintBottom_toTopOf="@id/GenderInfo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/characterImage"
                 app:layout_constraintTop_toBottomOf="@id/nameAndStatus">
@@ -126,7 +126,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/FirstEpisode"
+                android:id="@+id/GenderInfo"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -142,13 +142,13 @@
                     android:layout_marginStart="8dp"
                     android:text="@string/first_see_in"
                     android:textColor="@android:color/darker_gray"
-                    app:layout_constraintBottom_toTopOf="@id/firstEpisodeName"
+                    app:layout_constraintBottom_toTopOf="@id/gender"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed" />
 
                 <TextView
-                    android:id="@+id/firstEpisodeName"
+                    android:id="@+id/gender"
                     style="@style/Status"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/firstSeenInOverText"
                     app:layout_constraintTop_toBottomOf="@id/firstSeenInOverText"
-                    tools:text="Lawnmower Dog" />
+                    tools:text="Male" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

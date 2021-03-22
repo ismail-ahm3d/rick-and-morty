@@ -66,8 +66,7 @@ class AllCharactersAdapter : RecyclerView.Adapter<AllCharactersAdapter.AllCharac
                 checkAndSetStatusIcon(binding, character.status)
                 statusAndSpecies.text = "${character.status} - ${character.species}"
                 location.text = character.location.name
-//                firstEpisodeName.text = character.firstEpisode.name
-//                firstEpisodeName.isSelected = true
+                gender.text = character.gender
 
                 Glide
                     .with(context)
