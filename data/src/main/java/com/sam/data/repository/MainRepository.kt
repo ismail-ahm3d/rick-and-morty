@@ -7,5 +7,6 @@ import com.sam.domain.Character
 interface MainRepository {
 
     suspend fun getAllCharacters(): Resource<ApiResponse>
+    suspend fun getRandomCharacters(): Resource<ApiResponse>
     suspend fun getCharacterById(id: Int): Resource<Character>
 }

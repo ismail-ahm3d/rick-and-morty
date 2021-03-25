@@ -11,8 +11,8 @@
         android:id="@+id/mainImageContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.55"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -81,41 +81,14 @@
         app:layout_constraintTop_toBottomOf="@id/charactersOverText"
         tools:listitem="@layout/main_character_item" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
+    <include
+        android:id="@+id/resourceEvent"
+        layout="@layout/resource_event"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/mainCharactersRecyclerView"
         app:layout_constraintEnd_toEndOf="@id/mainCharactersRecyclerView"
         app:layout_constraintStart_toStartOf="@id/mainCharactersRecyclerView"
         app:layout_constraintTop_toTopOf="@id/mainCharactersRecyclerView" />
-
-    <TextView
-        android:id="@+id/textFailure"
-        style="@style/MainOverText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:visibility="gone"
-        android:text="@string/load_fail"
-        app:layout_constraintBottom_toTopOf="@id/buttonFailure"
-        app:layout_constraintEnd_toEndOf="@id/mainCharactersRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/mainCharactersRecyclerView"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <Button
-        android:id="@+id/buttonFailure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_retry"
-        android:text="@string/try_again"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/mainCharactersRecyclerView"
-        app:layout_constraintEnd_toEndOf="@id/textFailure"
-        app:layout_constraintStart_toStartOf="@id/textFailure"
-        app:layout_constraintTop_toBottomOf="@id/textFailure"
-        tools:ignore="RtlHardcoded" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

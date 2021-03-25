@@ -6,6 +6,7 @@ import com.sam.data.util.Resource
 import com.sam.domain.ApiResponse
 import com.sam.domain.Character
 import javax.inject.Inject
+import kotlin.random.Random
 
 class DefaultMainRepository @Inject constructor(
     private val api: ServiceApi
@@ -14,12 +15,16 @@ class DefaultMainRepository @Inject constructor(
     override suspend fun getAllCharacters(): Resource<ApiResponse> {
         return try {
             val apiResponse = api.getCharacters()
-//            apiResponse.results.map {
-//                val firstEpisodeLink = it.episodes.first()
-//                val episodeEndpoint = firstEpisodeLink.substring(BASE_URL.count())
-//                val episode = api.getEpisodeByLink(episodeEndpoint)
-//                it.firstEpisode = episode
-//            }
+            Resource.Success(apiResponse)
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Something went wrong..!!")
+        }
+    }
+
+    override suspend fun getRandomCharacters(): Resource<ApiResponse> {
+        return try {
+            val randomNumber = Random(System.nanoTime()).nextInt(1, 34)
+            val apiResponse = api.getCharacters(randomNumber)
             Resource.Success(apiResponse)
         } catch (e: Exception) {
             Resource.Error(e.message ?: "Something went wrong..!!")

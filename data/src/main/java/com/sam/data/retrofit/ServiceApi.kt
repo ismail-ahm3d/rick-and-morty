@@ -6,11 +6,14 @@ import com.sam.domain.Episode
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ServiceApi {
 
     @GET("character")
-    suspend fun getCharacters(): ApiResponse
+    suspend fun getCharacters(
+        @Query("page") page: Int = 1
+    ): ApiResponse
 
     @GET("character/{id}")
     suspend fun getCharacterById(
