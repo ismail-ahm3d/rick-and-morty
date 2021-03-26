@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -18,8 +19,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
 
     private var _binding: ViewBinding? = null
     abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
-
-    private lateinit var resourceEventBinding: ResourceEventBinding
 
     protected val binding: VB
         get() = _binding as VB
@@ -37,8 +36,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
 
         viewModel = ViewModelProvider(this).get(getViewModelClass())
 
-        resourceEventBinding = getResourceEventBinding()
-
         return binding.root
     }
 
@@ -48,38 +45,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
     }
 
     abstract fun getViewModelClass(): Class<VM>
-
-    abstract fun getResourceEventBinding(): ResourceEventBinding
-
-    protected fun handleSuccess() {
-
-        failureViewsVisibility(
-            false,
-            resourceEventBinding.textFailure,
-            resourceEventBinding.buttonFailure
-        )
-        resourceEventBinding.progressBar.isVisible = false
-    }
-
-    protected fun handleLoading() {
-
-        failureViewsVisibility(
-            false,
-            resourceEventBinding.textFailure,
-            resourceEventBinding.buttonFailure
-        )
-        resourceEventBinding.progressBar.isVisible = true
-    }
-
-    protected fun handleFailure() {
-
-        resourceEventBinding.progressBar.isVisible = false
-        failureViewsVisibility(
-            true,
-            resourceEventBinding.textFailure,
-            resourceEventBinding.buttonFailure
-        )
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

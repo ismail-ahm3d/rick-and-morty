@@ -1,92 +1,75 @@
 package com.sam.rickandmorty.ui.allcharacters
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.sam.domain.ApiResponse
 import com.sam.rickandmorty.databinding.FragmentAllCharactersBinding
-import com.sam.rickandmorty.ui.viewmodel.CharactersViewModel
+import com.sam.rickandmorty.databinding.ResourceEventBinding
+import com.sam.rickandmorty.ui.BaseFragment
+import com.sam.rickandmorty.ui.viewmodels.CharactersViewModel
+import com.sam.rickandmorty.util.Event
+import com.sam.rickandmorty.util.handleFailure
+import com.sam.rickandmorty.util.handleLoading
+import com.sam.rickandmorty.util.handleSuccess
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 
 @AndroidEntryPoint
-class AllCharactersFragment : Fragment() {
+class AllCharactersFragment : BaseFragment<FragmentAllCharactersBinding, CharactersViewModel>() {
 
-    private val viewModel: CharactersViewModel by viewModels()
+    private lateinit var allCharactersAdapter: AllCharactersAdapter
 
-    lateinit var allCharactersAdapter: AllCharactersAdapter
+    private lateinit var resourceBinding: ResourceEventBinding
 
-    private lateinit var binding: FragmentAllCharactersBinding
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAllCharactersBinding
+        get() = FragmentAllCharactersBinding::inflate
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentAllCharactersBinding.inflate(inflater, container, false)
-        val view = binding.root
-
+    override fun setup() {
         setupViews()
-        viewModel.requestCharacters()
-        lifecycleScope.launchWhenCreated {
-            collectDataAndFeedToRecycler()
-        }
-
-        return view
+        sendRequestAndGetData()
     }
 
+    override fun getViewModelClass(): Class<CharactersViewModel> = CharactersViewModel::class.java
+
     private suspend fun collectDataAndFeedToRecycler() {
-        viewModel.characters.collect { event ->
+        viewModel.character.collect { event ->
             when (event) {
-                is CharactersViewModel.CharacterEvent.Success -> {
-//                    handleSuccess(event)
+                is Event.Success -> {
+                    handleSuccess(resourceBinding)
+
+                    val response = event.data as ApiResponse
+                    allCharactersAdapter.characters = response.results
                 }
-                is CharactersViewModel.CharacterEvent.Failure -> {
-//                    handleFailure()
+                is Event.Failure -> {
+                    handleFailure(resourceBinding)
                 }
-                is CharactersViewModel.CharacterEvent.Loading -> {
-//                    handleLoading()
+                is Event.Loading -> {
+                    handleLoading(resourceBinding)
                 }
                 else -> Unit
             }
         }
     }
 
-//    private fun handleSuccess(event: CharactersViewModel.CharacterEvent.Success) {
-//        failureViewsVisibility(binding.textFailure, binding.buttonFailure, false)
-//        binding.progressBar.isVisible = false
-//
-//        val response = event.apiResponse
-//        allCharactersAdapter.characters = response.results
-//    }
-//
-//    private fun handleLoading() {
-//        failureViewsVisibility(binding.textFailure, binding.buttonFailure, false)
-//
-//        binding.progressBar.isVisible = true
-//    }
-//
-//    private fun handleFailure() {
-//        binding.progressBar.isVisible = false
-//
-//        failureViewsVisibility(binding.textFailure, binding.buttonFailure, true)
-//    }
+    private fun sendRequestAndGetData() {
+        viewModel.requestCharacters()
+        lifecycleScope.launchWhenCreated {
+            collectDataAndFeedToRecycler()
+        }
+    }
 
     private fun setupViews() {
+        resourceBinding = binding.resourceEvent
+
         binding.allCharactersRecycler.apply {
             allCharactersAdapter = AllCharactersAdapter()
             adapter = allCharactersAdapter
         }
 
-        binding.buttonFailure.setOnClickListener {
-            viewModel.requestCharacters()
-            lifecycleScope.launchWhenCreated {
-                collectDataAndFeedToRecycler()
-            }
+        resourceBinding.buttonFailure.setOnClickListener {
+            sendRequestAndGetData()
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.sam.rickandmorty.ui.viewmodel
+package com.sam.rickandmorty.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,6 +6,7 @@ import com.sam.data.repository.DefaultMainRepository
 import com.sam.data.util.DispatcherProvider
 import com.sam.data.util.Resource
 import com.sam.domain.ApiResponse
+import com.sam.rickandmorty.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,19 +21,12 @@ class CharactersViewModel @Inject constructor(
 
     private lateinit var response: Resource<ApiResponse>
 
-    sealed class CharacterEvent {
-        class Success(val apiResponse: ApiResponse) : CharacterEvent()
-        class Failure(val errorText: String) : CharacterEvent()
-        object Loading : CharacterEvent()
-        object Empty : CharacterEvent()
-    }
-
-    private val _characters = MutableStateFlow<CharacterEvent>(CharacterEvent.Empty)
-    val characters: StateFlow<CharacterEvent> = _characters
+    private val _characters = MutableStateFlow<Event>(Event.Empty)
+    val character: StateFlow<Event> = _characters
 
     fun requestCharacters(isRandom: Boolean = false) {
         viewModelScope.launch(dispatchers.io) {
-            _characters.value = CharacterEvent.Loading
+            _characters.value = Event.Loading
 
             response = if (isRandom)
                 repository.getRandomCharacters()
@@ -41,15 +35,14 @@ class CharactersViewModel @Inject constructor(
 
             when (response) {
                 is Resource.Error -> {
-                    _characters.value =
-                        CharacterEvent.Failure("Something went wrong..! ${response.message}")
+                    _characters.value = Event.Failure("Something went wrong..\n$response.message");
                 }
                 is Resource.Success -> {
                     val charactersResponse = response.data
                     if (charactersResponse != null)
-                        _characters.value = CharacterEvent.Success(charactersResponse)
+                        _characters.value = Event.Success(charactersResponse)
                     else
-                        _characters.value = CharacterEvent.Failure("UNKNOWN ERROR")
+                        _characters.value = Event.Failure("UNKNOWN ERROR")
                 }
             }
         }
