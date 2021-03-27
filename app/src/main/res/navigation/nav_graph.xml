@@ -13,10 +13,30 @@
         <action
             android:id="@+id/action_mainFragment_to_allCharactersFragment"
             app:destination="@id/allCharactersFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_characterDetailFragment"
+            app:destination="@id/characterDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/allCharactersFragment"
         android:name="com.sam.rickandmorty.ui.allcharacters.AllCharactersFragment"
         android:label="fragment_all_characters"
-        tools:layout="@layout/fragment_all_characters" />
+        tools:layout="@layout/fragment_all_characters" >
+        <action
+            android:id="@+id/action_allCharactersFragment_to_characterDetailFragment"
+            app:destination="@id/characterDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetailFragment"
+        android:name="com.sam.rickandmorty.ui.characterdetail.CharacterDetailFragment"
+        android:label="fragment_character_details"
+        tools:layout="@layout/fragment_character_details" >
+        <argument
+            android:name="character"
+            app:argType="com.sam.domain.Character" />
+    </fragment>
 </navigation>

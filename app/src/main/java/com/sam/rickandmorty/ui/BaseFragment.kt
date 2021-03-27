@@ -36,12 +36,8 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
 
         viewModel = ViewModelProvider(this).get(getViewModelClass())
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         setup()
+        return binding.root
     }
 
     abstract fun getViewModelClass(): Class<VM>

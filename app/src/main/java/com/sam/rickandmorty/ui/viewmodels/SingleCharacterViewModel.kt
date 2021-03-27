@@ -28,7 +28,7 @@ class SingleCharacterViewModel @Inject constructor(
         viewModelScope.launch(dispatchers.io) {
             _character.value = Event.Loading
 
-            repository.getCharacterById(id)
+            characterResource = repository.getCharacterById(id)
 
             when (characterResource) {
                 is Resource.Success -> {

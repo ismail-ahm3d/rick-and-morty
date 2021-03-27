@@ -1,8 +1,11 @@
 package com.sam.domain
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 
+@Parcelize
 data class Character @Inject constructor(
     @SerializedName("gender")
     val gender: String,
@@ -24,5 +27,5 @@ data class Character @Inject constructor(
     val type: String,
     @SerializedName("url")
     val url: String,
-    var firstEpisode: Episode
-)
+//    var firstEpisode: Episode
+) : Parcelable

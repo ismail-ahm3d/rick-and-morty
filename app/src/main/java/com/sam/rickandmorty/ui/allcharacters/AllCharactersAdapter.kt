@@ -56,8 +56,6 @@ class AllCharactersAdapter : RecyclerView.Adapter<AllCharactersAdapter.AllCharac
         holder.bind(currentCharacter)
     }
 
-    private val TAG = "AllCharactersAdapter"
-
     inner class AllCharactersHolder(private val binding: AllCharacterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(character: Character) {
