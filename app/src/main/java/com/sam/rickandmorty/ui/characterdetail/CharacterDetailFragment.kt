@@ -8,6 +8,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.sam.domain.Character
 import com.sam.rickandmorty.databinding.FragmentCharacterDetailsBinding
 import com.sam.rickandmorty.databinding.ResourceEventBinding
@@ -33,7 +36,8 @@ class CharacterDetailFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
     override fun setup() {
@@ -46,6 +50,8 @@ class CharacterDetailFragment :
         Glide
             .with(this@CharacterDetailFragment)
             .load(character.image)
+            .apply(RequestOptions.circleCropTransform())
+//            .transform(GranularRoundedCorners(0f, 32f, 32f, 0f))
             .into(binding.detailImage)
 //        viewModel.requestCharacter(id)
 //        lifecycleScope.launchWhenCreated {

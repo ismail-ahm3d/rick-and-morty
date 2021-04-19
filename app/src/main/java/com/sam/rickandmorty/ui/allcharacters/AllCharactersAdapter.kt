@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -15,28 +16,31 @@ import com.sam.rickandmorty.R
 import com.sam.rickandmorty.databinding.AllCharacterItemBinding
 import com.sam.rickandmorty.databinding.MainCharacterItemBinding
 
-class AllCharactersAdapter : RecyclerView.Adapter<AllCharactersAdapter.AllCharactersHolder>() {
+class AllCharactersAdapter :
+    PagingDataAdapter<Character, AllCharactersAdapter.AllCharactersHolder>(
+        CHARACTER_COMPARATOR
+    ) {
 
     lateinit var context: Context
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Character>() {
-        override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean {
-            return oldItem.id == newItem.id
-        }
+//    private val diffCallback = object : DiffUtil.ItemCallback<Character>() {
+//        override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean {
+//            return oldItem.id == newItem.id
+//        }
+//
+//        override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean {
+//            return oldItem == newItem
+//        }
+//    }
+//
+//    private val differ = AsyncListDiffer(this, diffCallback)
+//    var characters: List<Character>
+//        get() = differ.currentList
+//        set(value) {
+//            differ.submitList(value)
+//        }
 
-        override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean {
-            return oldItem == newItem
-        }
-    }
-
-    private val differ = AsyncListDiffer(this, diffCallback)
-    var characters: List<Character>
-        get() = differ.currentList
-        set(value) {
-            differ.submitList(value)
-        }
-
-    override fun getItemCount(): Int = characters.size
+//    override fun getItemCount(): Int = characters.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllCharactersHolder {
 
@@ -52,8 +56,9 @@ class AllCharactersAdapter : RecyclerView.Adapter<AllCharactersAdapter.AllCharac
     }
 
     override fun onBindViewHolder(holder: AllCharactersHolder, position: Int) {
-        val currentCharacter = characters[position]
-        holder.bind(currentCharacter)
+        val currentCharacter = getItem(position)
+        if (currentCharacter != null)
+            holder.bind(currentCharacter)
     }
 
     inner class AllCharactersHolder(private val binding: AllCharacterItemBinding) :
@@ -91,6 +96,20 @@ class AllCharactersAdapter : RecyclerView.Adapter<AllCharactersAdapter.AllCharac
                         context.applicationContext.getColorStateList(R.color.unknown)
                 }
             }
+        }
+    }
+
+    companion object {
+        private val CHARACTER_COMPARATOR = object : DiffUtil.ItemCallback<Character>() {
+            override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(
+                oldItem: Character,
+                newItem: Character
+            ): Boolean =
+                oldItem == newItem
+
         }
     }
 }

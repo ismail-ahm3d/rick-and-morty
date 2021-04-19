@@ -1,19 +1,14 @@
 package com.sam.rickandmorty.ui.main
 
-import android.transition.ChangeBounds
-import android.transition.ChangeClipBounds
-import android.transition.ChangeTransform
-import android.transition.Transition
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigator
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.RecyclerView
 import com.sam.domain.ApiResponse
 import com.sam.domain.Character
 import com.sam.rickandmorty.R
@@ -48,7 +43,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, CharactersViewModel>(),
     }
 
     private fun sendRequestAndGetData() {
-        viewModel.requestCharacters()
+        viewModel.requestRandomCharacters()
         lifecycleScope.launch {
             collectDataAndFeedToRecycler()
         }
@@ -60,6 +55,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, CharactersViewModel>(),
         binding.mainCharactersRecyclerView.apply {
             mainAdapter = MainCharactersAdapter(this@MainFragment)
             adapter = mainAdapter
+            mainAdapter.stateRestorationPolicy =
+                RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
             postponeEnterTransition()
             viewTreeObserver.addOnPreDrawListener {
@@ -81,10 +78,15 @@ class MainFragment : BaseFragment<FragmentMainBinding, CharactersViewModel>(),
         }
     }
 
-    override fun onItemClicked(character: Character, navExtra: FragmentNavigator.Extras) {
-//        val action = MainFragmentDirections.actionMainFragmentToCharacterDetailFragment()
-//        val extraMain = FragmentNavigatorExtras(characterImageView to "main")
+    override fun onItemClicked(character: Character, circularCharacterImage: ImageView) {
         val mainBundle = bundleOf("character" to character)
+
+        val navExtra = FragmentNavigator.Extras.Builder()
+            .addSharedElement(
+                circularCharacterImage,
+                circularCharacterImage.transitionName
+            )
+            .build()
 
         findNavController().navigate(
             R.id.action_mainFragment_to_characterDetailFragment,
@@ -101,7 +103,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, CharactersViewModel>(),
                     handleSuccess(resourceBinding)
 
                     val response = event.data as ApiResponse
-                    mainAdapter.characters = response.results
+                    mainAdapter.submitList(response.results)
                 }
                 is Event.Failure -> {
                     handleFailure(resourceBinding)

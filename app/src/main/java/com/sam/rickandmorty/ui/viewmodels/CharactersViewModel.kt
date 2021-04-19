@@ -24,18 +24,17 @@ class CharactersViewModel @Inject constructor(
     private val _characters = MutableStateFlow<Event>(Event.Empty)
     val character: StateFlow<Event> = _characters
 
-    fun requestCharacters(isRandom: Boolean = false) {
+    fun requestRandomCharacters() {
         viewModelScope.launch(dispatchers.io) {
             _characters.value = Event.Loading
 
-            response = if (isRandom)
+            response =
                 repository.getRandomCharacters()
-            else
-                repository.getAllCharacters()
 
             when (response) {
                 is Resource.Error -> {
-                    _characters.value = Event.Failure("Something went wrong..\n$response.message");
+                    _characters.value =
+                        Event.Failure("Something went wrong..\n${response.message}")
                 }
                 is Resource.Success -> {
                     val charactersResponse = response.data
@@ -47,4 +46,5 @@ class CharactersViewModel @Inject constructor(
             }
         }
     }
+
 }

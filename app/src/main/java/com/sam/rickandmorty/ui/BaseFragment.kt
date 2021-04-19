@@ -37,6 +37,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
         viewModel = ViewModelProvider(this).get(getViewModelClass())
 
         setup()
+
         return binding.root
     }
 

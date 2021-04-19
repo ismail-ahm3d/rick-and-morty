@@ -35,21 +35,4 @@ object ServiceProvider {
         retrofit
             .build()
             .create(ServiceApi::class.java)
-
-    @Singleton
-    @Provides
-    fun provideMainRepository(api: ServiceApi): MainRepository = DefaultMainRepository(api)
-
-    @Singleton
-    @Provides
-    fun provideDispatchers(): DispatcherProvider = object : DispatcherProvider {
-        override val main: CoroutineDispatcher
-            get() = Dispatchers.Main
-        override val io: CoroutineDispatcher
-            get() = Dispatchers.IO
-        override val default: CoroutineDispatcher
-            get() = Dispatchers.Default
-        override val unconfined: CoroutineDispatcher
-            get() = Dispatchers.Unconfined
-    }
 }
