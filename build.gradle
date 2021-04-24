@@ -17,6 +17,8 @@ buildscript {
 
         pagingVersion = "3.0.0-alpha08"
 
+        room_version = "2.2.6"
+
         kotlin_version = "1.4.31"
         mockkVersion = '1.9'
         constraintLayoutVersion = '2.0.4'

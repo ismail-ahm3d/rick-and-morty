@@ -65,4 +65,5 @@ dependencies {
     // Coroutine Lifecycle Scopes
 //    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
 //    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_runtime"
+    kapt "androidx.room:room-compiler:$room_version"
 }

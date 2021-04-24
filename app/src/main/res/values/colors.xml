@@ -7,14 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="white_400">#BAB9B9</color>
+    <color name="white_400">#CCCCCC</color>
+    <color name="white_200">#9E9E9E</color>
     <color name="white_700">#DDDDDD</color>
 
     <!-- Main colors-->
     <color name="background">#001211</color>
     <color name="logoTextColor">#08b2c9</color>
 
-    <color name="mainCharacterItemLayer">#ee001211</color>
+    <color name="mainCharacterItemLayer">#EE001E1C</color>
 
     <!-- Status Icon Colors-->
     <color name="alive">#47bb44</color>

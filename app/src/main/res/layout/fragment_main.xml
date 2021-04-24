@@ -36,6 +36,7 @@
             app:layout_constraintGuide_percent="0.75" />
 
         <ImageView
+            android:id="@+id/mainLogo"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:padding="16dp"
@@ -52,27 +53,26 @@
         style="@style/MainOverText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:padding="16dp"
         android:text="@string/characters"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mainImageContainer" />
 
-    <View
+    <ImageButton
         android:id="@+id/seeAllBtn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/ic_show_all"
-        app:layout_constraintBottom_toBottomOf="@id/charactersOverText"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        android:padding="16dp"
+        android:src="@drawable/ic_show_all"
+        app:layout_constraintBottom_toTopOf="@id/mainCharactersRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/charactersOverText" />
+        app:layout_constraintTop_toBottomOf="@id/mainImageContainer" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mainCharactersRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginVertical="16dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"

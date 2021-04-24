@@ -3,15 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:background="#111">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mainCardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="12dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@id/characterName"
         app:layout_constraintDimensionRatio="2.5:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,9 +26,10 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/characterImage"
+                android:id="@+id/circularCharacterImage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:elevation="16dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -32,78 +37,25 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/rick" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@drawable/main_character_image_layer"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/circularCharacterImage"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:elevation="16dp"
-                app:layout_constraintBottom_toTopOf="@id/characterName"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="@id/rightGuide"
-                app:layout_constraintStart_toStartOf="@id/leftGuide"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/rick" />
-
-            <TextView
-                android:id="@+id/characterName"
-                style="@style/CharacterName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="8dp"
-                android:paddingHorizontal="8dp"
-                app:layout_constraintBottom_toTopOf="@id/characterStatus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/circularCharacterImage"
-                tools:text="Rick Sanchez" />
-
-            <TextView
-                android:id="@+id/characterStatus"
-                style="@style/Status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/statusIcon"
-                app:layout_constraintTop_toBottomOf="@id/characterName"
-                tools:text="Alive" />
-
-            <View
-                android:id="@+id/statusIcon"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:background="@drawable/status_icon_background"
-                app:layout_constraintBottom_toBottomOf="@id/characterStatus"
-                app:layout_constraintEnd_toStartOf="@id/characterStatus"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/characterStatus" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/leftGuide"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.20" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/rightGuide"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.80" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/characterName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="8dp"
+        android:textAppearance="@style/CharacterName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/mainCardView"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/mainCardView"
+        app:layout_constraintTop_toBottomOf="@id/mainCardView"
+        tools:text="Rick Sanchez" />
 </androidx.constraintlayout.widget.ConstraintLayout>

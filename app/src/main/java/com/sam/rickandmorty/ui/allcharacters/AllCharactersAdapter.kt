@@ -12,12 +12,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.sam.domain.Character
 import com.sam.domain.Episode
+import com.sam.domain.network.NetworkCharacter
 import com.sam.rickandmorty.R
 import com.sam.rickandmorty.databinding.AllCharacterItemBinding
 import com.sam.rickandmorty.databinding.MainCharacterItemBinding
 
 class AllCharactersAdapter :
-    PagingDataAdapter<Character, AllCharactersAdapter.AllCharactersHolder>(
+    PagingDataAdapter<NetworkCharacter, AllCharactersAdapter.AllCharactersHolder>(
         CHARACTER_COMPARATOR
     ) {
 
@@ -63,7 +64,7 @@ class AllCharactersAdapter :
 
     inner class AllCharactersHolder(private val binding: AllCharacterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(character: Character) {
+        fun bind(character: NetworkCharacter) {
             binding.apply {
                 characterName.text = character.name
                 checkAndSetStatusIcon(binding, character.status)
@@ -100,13 +101,13 @@ class AllCharactersAdapter :
     }
 
     companion object {
-        private val CHARACTER_COMPARATOR = object : DiffUtil.ItemCallback<Character>() {
-            override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean =
+        private val CHARACTER_COMPARATOR = object : DiffUtil.ItemCallback<NetworkCharacter>() {
+            override fun areItemsTheSame(oldItem: NetworkCharacter, newItem: NetworkCharacter): Boolean =
                 oldItem.id == newItem.id
 
             override fun areContentsTheSame(
-                oldItem: Character,
-                newItem: Character
+                oldItem: NetworkCharacter,
+                newItem: NetworkCharacter
             ): Boolean =
                 oldItem == newItem
 

@@ -2,30 +2,35 @@ package com.sam.domain
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.sam.domain.db.DatabaseCharacter
 import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 
 @Parcelize
 data class Character @Inject constructor(
-    @SerializedName("gender")
     val gender: String,
-    @SerializedName("id")
     val id: Int,
-    @SerializedName("image")
     val image: String,
-    @SerializedName("location")
-    val location: Location,
-    @SerializedName("name")
+    val location: Location?,
     val name: String,
-    @SerializedName("episode")
-    val episodes: List<String>,
-    @SerializedName("species")
+    val episodes: List<String>?,
     val species: String,
-    @SerializedName("status")
     val status: String,
-    @SerializedName("type")
     val type: String,
-    @SerializedName("url")
     val url: String,
-//    var firstEpisode: Episode
 ) : Parcelable
+
+fun Character.asDatabaseModel(): DatabaseCharacter {
+    return let { character ->
+        DatabaseCharacter(
+            name = character.name,
+            gender = character.gender,
+            id = character.id,
+            image = character.image,
+            species = character.species,
+            status = character.status,
+            type = character.type,
+            url = character.url,
+        )
+    }
+}

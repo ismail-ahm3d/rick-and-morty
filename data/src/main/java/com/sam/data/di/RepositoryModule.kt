@@ -1,5 +1,6 @@
 package com.sam.data.di
 
+import com.sam.data.db.CharacterDao
 import com.sam.data.repository.DefaultMainRepository
 import com.sam.data.repository.MainRepository
 import com.sam.data.retrofit.ServiceApi
@@ -16,7 +17,7 @@ import kotlin.random.Random
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object RepositoryProvider {
+object RepositoryModule {
 
     @ViewModelScoped
     @Provides
@@ -25,8 +26,12 @@ object RepositoryProvider {
 
     @ViewModelScoped
     @Provides
-    fun provideMainRepository(api: ServiceApi, randomPageNumber: Int): MainRepository =
-        DefaultMainRepository(api, randomPageNumber)
+    fun provideMainRepository(
+        api: ServiceApi,
+        characterDao: CharacterDao,
+        randomPageNumber: Int
+    ): MainRepository =
+        DefaultMainRepository(api, characterDao, randomPageNumber)
 
     @ViewModelScoped
     @Provides

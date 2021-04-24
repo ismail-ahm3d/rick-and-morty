@@ -5,10 +5,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
 import com.sam.domain.ApiResponse
 import com.sam.domain.Character
 import com.sam.rickandmorty.R
@@ -23,6 +26,7 @@ import com.sam.rickandmorty.util.handleSuccess
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment<FragmentMainBinding, CharactersViewModel>(),
@@ -31,6 +35,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, CharactersViewModel>(),
     private lateinit var mainAdapter: MainCharactersAdapter
 
     private lateinit var resourceBinding: ResourceEventBinding
+
+    private lateinit var cachedList: List<Character>
 
     override fun getViewModelClass(): Class<CharactersViewModel> = CharactersViewModel::class.java
 
@@ -43,13 +49,21 @@ class MainFragment : BaseFragment<FragmentMainBinding, CharactersViewModel>(),
     }
 
     private fun sendRequestAndGetData() {
-        viewModel.requestRandomCharacters()
-        lifecycleScope.launch {
-            collectDataAndFeedToRecycler()
+        if (viewModel.cachedCharacters.size > 0) {
+            handleSuccess(resourceBinding)
+
+            mainAdapter.submitList(viewModel.cachedCharacters)
+        } else {
+            lifecycleScope.launchWhenCreated {
+                collectDataAndFeedToRecycler()
+            }
         }
     }
 
     private fun setupViews() {
+        sharedElementReturnTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+
         resourceBinding = binding.resourceEvent
 
         binding.mainCharactersRecyclerView.apply {
@@ -78,22 +92,18 @@ class MainFragment : BaseFragment<FragmentMainBinding, CharactersViewModel>(),
         }
     }
 
-    override fun onItemClicked(character: Character, circularCharacterImage: ImageView) {
-        val mainBundle = bundleOf("character" to character)
+    override fun onItemClicked(
+        character: Character,
+        circularCharacterImage: ImageView
+    ) {
+        val direction: NavDirections =
+            MainFragmentDirections.actionMainFragmentToCharacterDetailFragment(character)
 
-        val navExtra = FragmentNavigator.Extras.Builder()
-            .addSharedElement(
-                circularCharacterImage,
-                circularCharacterImage.transitionName
-            )
-            .build()
-
-        findNavController().navigate(
-            R.id.action_mainFragment_to_characterDetailFragment,
-            mainBundle,
-            null,
-            navExtra
+        val extras = FragmentNavigatorExtras(
+            circularCharacterImage to "main_${character.id}",
         )
+
+        findNavController().navigate(direction, extras)
     }
 
     private suspend fun collectDataAndFeedToRecycler() {
@@ -102,8 +112,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, CharactersViewModel>(),
                 is Event.Success -> {
                     handleSuccess(resourceBinding)
 
-                    val response = event.data as ApiResponse
-                    mainAdapter.submitList(response.results)
+                    val response = event.data as List<Character>
+                    mainAdapter.submitList(response)
                 }
                 is Event.Failure -> {
                     handleFailure(resourceBinding)
