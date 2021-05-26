@@ -25,27 +25,35 @@ class SingleCharacterViewModel @Inject constructor(
 
     private lateinit var characterResource: Resource<NetworkCharacter>
 
-    fun getSingleCharacter(id: Int): Flow<Event> = flow {
+    private val _character = MutableStateFlow<Event>(Event.Empty)
+    val character: StateFlow<Event> = _character
+
+    suspend fun getSingleCharacter(id: Int) {
         withContext(dispatchers.io) {
-            emit(Event.Loading)
+            _character.value = Event.Loading
 
             characterResource = repository.getCharacterById(id)
 
             when (characterResource) {
+                /**
+                 * Success Event
+                 */
                 is Resource.Success -> {
 
                     val character = characterResource.data
-
                     if (character != null)
-                        emit(Event.Success(character))
+                        _character.value = Event.Success(character)
                     else
-                        emit(Event.Failure("UNKNOWN ERROR"))
+                        _character.value = Event.Failure("UNKNOWN ERROR")
                 }
+                /**
+                 * Error Event
+                 */
                 is Resource.Error -> {
-                    emit(Event.Failure("Something went wrong..\n$characterResource.message"))
+                    _character.value =
+                        Event.Failure("Something went wrong..\n$characterResource.message")
                 }
             }
         }
-
     }
 }

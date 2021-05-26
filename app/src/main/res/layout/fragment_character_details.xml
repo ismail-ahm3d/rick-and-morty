@@ -142,13 +142,13 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:overScrollMode="never"
-        app:spanCount="5"
-        tools:itemCount="43"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/episodesText"
+        app:spanCount="5"
+        tools:itemCount="43"
         tools:listitem="@layout/episode_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

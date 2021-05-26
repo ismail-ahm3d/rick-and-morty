@@ -12,6 +12,7 @@ import com.sam.rickandmorty.databinding.FragmentCharacterDetailsBinding
 import com.sam.rickandmorty.databinding.ResourceEventBinding
 import com.sam.rickandmorty.ui.BaseFragment
 import com.sam.rickandmorty.ui.viewmodels.SingleCharacterViewModel
+import com.sam.rickandmorty.util.Event
 import com.sam.rickandmorty.util.checkAndSetStatusIcon
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -64,9 +65,17 @@ class CharacterDetailFragment :
 
     private fun requestAndSetData(id: Int) {
         lifecycleScope.launchWhenCreated {
-            viewModel.getSingleCharacter(id).collect { event ->
+            viewModel.getSingleCharacter(id)
+            viewModel.character.collect { event ->
                 when (event) {
-
+                    is Event.Loading -> {
+                    }
+                    is Event.Success -> {
+                    }
+                    is Event.Failure -> {
+                    }
+                    else -> {
+                    }
                 }
             }
         }

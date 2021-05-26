@@ -59,5 +59,4 @@ class CharactersViewModel @Inject constructor(
         cachedCharacters.clear()
         super.onCleared()
     }
-
 }
