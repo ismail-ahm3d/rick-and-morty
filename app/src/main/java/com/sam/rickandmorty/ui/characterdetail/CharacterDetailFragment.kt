@@ -33,31 +33,39 @@ class CharacterDetailFragment :
         SingleCharacterViewModel::class.java
 
     override fun setup() {
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-        postponeEnterTransition(150, TimeUnit.MILLISECONDS)
+        val isFromMainFragment = args.isFromMain
+
+        if (isFromMainFragment) {
+            /**
+             * If the navigation is from main fragment,
+             * @sharedElementEnterTransition will be enabled
+             */
+            sharedElementEnterTransition =
+                TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+            postponeEnterTransition(150, TimeUnit.MILLISECONDS)
+        }
 
         val character = args.character
 
         binding.apply {
             characterImage.transitionName = "main_${character.id}"
 
-            characterName.text = character.name
-            checkAndSetStatusIcon(statusIcon, character.status, requireContext())
-            characterStatus.text = character.status
-            characterGender.text = character.gender
-            characterSpecies.text = character.species
+//            characterName.text = character.name
+//            checkAndSetStatusIcon(statusIcon, character.status, requireContext())
+//            characterStatus.text = character.status
+//            characterGender.text = character.gender
+//            characterSpecies.text = character.species
 
             Glide
                 .with(requireContext())
                 .load(character.image)
                 .into(characterImage)
 
-            Glide
-                .with(requireContext())
-                .load(character.image)
-                .transition(DrawableTransitionOptions.withCrossFade(1000))
-                .into(characterBackgroundImage)
+//            Glide
+//                .with(requireContext())
+//                .load(character.image)
+//                .transition(DrawableTransitionOptions.withCrossFade(1000))
+//                .into(characterBackgroundImage)
         }
 
         requestAndSetData(character.id)

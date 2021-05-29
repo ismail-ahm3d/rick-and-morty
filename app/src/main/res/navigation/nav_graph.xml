@@ -38,5 +38,9 @@
         <argument
             android:name="character"
             app:argType="com.sam.domain.Character" />
+        <argument
+            android:name="isFromMain"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 </navigation>

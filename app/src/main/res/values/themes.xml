@@ -35,6 +35,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="DetailCharacterNameExpanded" parent="DetailCharacterName">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="DetailCharacterDetails" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textColor">@color/white_200</item>
         <item name="android:textAlignment">center</item>

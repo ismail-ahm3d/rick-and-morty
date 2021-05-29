@@ -97,7 +97,11 @@ class MainFragment : BaseFragment<FragmentMainBinding, CharactersViewModel>(),
         circularCharacterImage: ImageView
     ) {
         val direction: NavDirections =
-            MainFragmentDirections.actionMainFragmentToCharacterDetailFragment(character)
+            MainFragmentDirections
+                .actionMainFragmentToCharacterDetailFragment(
+                    character,
+                    true
+                )
 
         val extras = FragmentNavigatorExtras(
             circularCharacterImage to "main_${character.id}",

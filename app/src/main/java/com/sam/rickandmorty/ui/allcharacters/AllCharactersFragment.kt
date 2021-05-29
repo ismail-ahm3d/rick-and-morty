@@ -5,17 +5,23 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.sam.domain.Character
 import com.sam.rickandmorty.databinding.FragmentAllCharactersBinding
 import com.sam.rickandmorty.databinding.ResourceEventBinding
 import com.sam.rickandmorty.ui.BaseFragment
+import com.sam.rickandmorty.ui.main.MainFragmentDirections
 import com.sam.rickandmorty.ui.viewmodels.AllCharactersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
-class AllCharactersFragment : BaseFragment<FragmentAllCharactersBinding, AllCharactersViewModel>() {
+class AllCharactersFragment : BaseFragment<FragmentAllCharactersBinding, AllCharactersViewModel>(),
+    AllCharactersAdapter.OnCharacterItemClickListener {
 
     private lateinit var allCharactersAdapter: AllCharactersAdapter
 
@@ -46,7 +52,7 @@ class AllCharactersFragment : BaseFragment<FragmentAllCharactersBinding, AllChar
 
     private fun setupViews() {
         resourceBinding = binding.resourceEvent
-        allCharactersAdapter = AllCharactersAdapter()
+        allCharactersAdapter = AllCharactersAdapter(this)
         setListenerForAdapter()
 
         binding.allCharactersRecycler.apply {
@@ -54,7 +60,7 @@ class AllCharactersFragment : BaseFragment<FragmentAllCharactersBinding, AllChar
         }
     }
 
-    private fun setListenerForAdapter(){
+    private fun setListenerForAdapter() {
         allCharactersAdapter.addLoadStateListener { loadState ->
             resourceBinding.apply {
                 progressBar.isVisible = loadState.source.refresh is LoadState.Loading
@@ -76,5 +82,16 @@ class AllCharactersFragment : BaseFragment<FragmentAllCharactersBinding, AllChar
                 }
             }
         }
+    }
+
+    override fun onClick(character: Character) {
+        val direction: NavDirections =
+            AllCharactersFragmentDirections
+                .actionAllCharactersFragmentToCharacterDetailFragment(
+                    character,
+                    isFromMain = false
+                )
+
+        findNavController().navigate(direction)
     }
 }

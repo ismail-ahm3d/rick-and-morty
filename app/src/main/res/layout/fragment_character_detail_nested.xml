@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/characterBackgroundImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/rick" />
+
+        <View
+            android:id="@+id/characterLayer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/main_character_image_layer"
+            app:layout_constraintBottom_toBottomOf="@id/characterBackgroundImage"
+            app:layout_constraintEnd_toEndOf="@id/characterBackgroundImage"
+            app:layout_constraintStart_toStartOf="@id/characterBackgroundImage"
+            app:layout_constraintTop_toTopOf="@id/characterBackgroundImage" />
+
+        <TextView
+            android:id="@+id/characterStatus"
+            style="@style/Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/statusIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Alive" />
+
+        <View
+            android:id="@+id/statusIcon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/status_icon_background"
+            app:layout_constraintBottom_toBottomOf="@id/characterStatus"
+            app:layout_constraintEnd_toStartOf="@id/characterStatus"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/characterStatus" />
+
+        <TextView
+            android:id="@+id/genderText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:text="Gender:"
+            android:textAppearance="@style/DetailCharacterDetails"
+            app:layout_constraintEnd_toStartOf="@id/species"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusIcon" />
+
+        <TextView
+            android:id="@+id/characterGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/CharacterName"
+            app:layout_constraintEnd_toEndOf="@id/genderText"
+            app:layout_constraintStart_toStartOf="@id/genderText"
+            app:layout_constraintTop_toBottomOf="@id/genderText"
+            tools:text="Rick Sanckes" />
+
+        <TextView
+            android:id="@+id/species"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:text="Species:"
+            android:textAppearance="@style/DetailCharacterDetails"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/genderText"
+            app:layout_constraintTop_toBottomOf="@id/statusIcon" />
+
+        <TextView
+            android:id="@+id/characterSpecies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/CharacterName"
+            app:layout_constraintEnd_toEndOf="@id/species"
+            app:layout_constraintStart_toStartOf="@id/species"
+            app:layout_constraintTop_toBottomOf="@id/species"
+            tools:text="Rick Sanckes" />
+
+        <TextView
+            android:id="@+id/episodesText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Species:"
+            android:textAppearance="@style/DetailCharacterDetails"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/characterGender" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
