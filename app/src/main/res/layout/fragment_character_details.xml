@@ -11,19 +11,22 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="380dp"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:contentScrim="?attr/colorSecondary"
+            app:expandedTitleGravity="center|bottom"
+            app:collapsedTitleGravity="center"
             app:collapsedTitleTextAppearance="@style/DetailCharacterName"
             app:expandedTitleTextAppearance="@style/DetailCharacterNameExpanded"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:title="Rick">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|snapMargins"
+            tools:title="Rick">
 
-            <com.google.android.material.appbar.MaterialToolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolBar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -34,13 +37,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"
+                app:layout_collapseMode="pin"
                 tools:src="@drawable/rick" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/fragment_character_detail_nested" />
+    <include android:id="@+id/nestedDetail" layout="@layout/fragment_character_detail_nested" />
 
     <!--    <androidx.recyclerview.widget.RecyclerView-->
     <!--        android:id="@+id/episodesRecycler"-->

@@ -22,8 +22,8 @@ interface ServiceApi {
     ): NetworkCharacter
 
     // Get Episode
-    @GET("{link}")
-    suspend fun getEpisodeByLink(
-        @Path("link") link: String
+    @GET("episode/{id}")
+    suspend fun getEpisodeById(
+        @Path("id") id: Int
     ): Episode
 }

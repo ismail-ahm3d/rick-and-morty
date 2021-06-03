@@ -1,5 +1,6 @@
 package com.sam.rickandmorty.ui.characterdetail
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
@@ -8,6 +9,8 @@ import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.sam.domain.Episode
+import com.sam.domain.network.NetworkCharacter
 import com.sam.rickandmorty.databinding.FragmentCharacterDetailsBinding
 import com.sam.rickandmorty.databinding.ResourceEventBinding
 import com.sam.rickandmorty.ui.BaseFragment
@@ -50,11 +53,12 @@ class CharacterDetailFragment :
         binding.apply {
             characterImage.transitionName = "main_${character.id}"
 
-//            characterName.text = character.name
-//            checkAndSetStatusIcon(statusIcon, character.status, requireContext())
-//            characterStatus.text = character.status
-//            characterGender.text = character.gender
-//            characterSpecies.text = character.species
+            toolbarLayout.title = character.name
+
+            checkAndSetStatusIcon(nestedDetail.statusIcon, character.status, requireContext())
+            nestedDetail.characterStatus.text = character.status
+            nestedDetail.characterGender.text = character.gender
+            nestedDetail.characterSpecies.text = character.species
 
             Glide
                 .with(requireContext())
@@ -71,6 +75,11 @@ class CharacterDetailFragment :
         requestAndSetData(character.id)
     }
 
+    private val TAG = "CharacterDetailFragment"
+
+    /**
+     * Need a clean up and refactor
+     */
     private fun requestAndSetData(id: Int) {
         lifecycleScope.launchWhenCreated {
             viewModel.getSingleCharacter(id)
@@ -79,6 +88,22 @@ class CharacterDetailFragment :
                     is Event.Loading -> {
                     }
                     is Event.Success -> {
+                        val character = event.data as NetworkCharacter
+                        viewModel.getAllEpisodesByCharacter(character)
+
+                        viewModel.episodes.collect { episodeEvent ->
+                            when (episodeEvent){
+                                is Event.Loading -> {}
+                                is Event.Success -> {
+                                    val episodes = episodeEvent.data as List<Episode>
+                                    episodes.map {
+                                        Log.d(TAG, "requestAndSetData: ${it.episodeName}")
+                                    }
+                                }
+                                is Event.Failure -> {}
+                                else -> {}
+                            }
+                        }
                     }
                     is Event.Failure -> {
                     }

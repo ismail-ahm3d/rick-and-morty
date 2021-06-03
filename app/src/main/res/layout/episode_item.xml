@@ -6,11 +6,12 @@
     android:padding="8dp">
 
     <TextView
+        android:id="@+id/episodeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/episode_background"
         android:paddingHorizontal="16dp"
         android:paddingVertical="4dp"
         android:textAppearance="@style/CharacterName"
-        tools:text="23" />
+        tools:text="S02E12" />
 </FrameLayout>

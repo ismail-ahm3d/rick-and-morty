@@ -6,6 +6,7 @@ import com.sam.data.repository.DefaultMainRepository
 import com.sam.data.util.DispatcherProvider
 import com.sam.data.util.Resource
 import com.sam.domain.Character
+import com.sam.domain.Episode
 import com.sam.domain.network.NetworkCharacter
 import com.sam.rickandmorty.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,10 +24,17 @@ class SingleCharacterViewModel @Inject constructor(
     private val dispatchers: DispatcherProvider
 ) : ViewModel() {
 
+    companion object {
+        private val EPISODE_URL_SUBSTRING_INDEX = 40
+    }
+
     private lateinit var characterResource: Resource<NetworkCharacter>
 
     private val _character = MutableStateFlow<Event>(Event.Empty)
     val character: StateFlow<Event> = _character
+
+    private val _episodes = MutableStateFlow<Event>(Event.Empty)
+    val episodes: StateFlow<Event> = _episodes
 
     suspend fun getSingleCharacter(id: Int) {
         withContext(dispatchers.io) {
@@ -52,6 +60,37 @@ class SingleCharacterViewModel @Inject constructor(
                 is Resource.Error -> {
                     _character.value =
                         Event.Failure("Something went wrong..\n$characterResource.message")
+                }
+            }
+        }
+    }
+
+    /**
+     * Need a clean up and refactor
+     */
+    suspend fun getAllEpisodesByCharacter(character: NetworkCharacter) {
+        withContext(dispatchers.io) {
+            _episodes.value = Event.Loading
+
+            val episodes = mutableListOf<Episode>()
+
+            character.episodes.map { episode ->
+                val episodeId = episode.substring(EPISODE_URL_SUBSTRING_INDEX).toInt()
+                val episodeResource = repository.getEpisodeById(episodeId)
+                when (episodeResource) {
+                    is Resource.Success -> {
+
+                        val characterEpisode = episodeResource.data
+
+                        if (characterEpisode != null) {
+                            episodes.add(characterEpisode)
+                            _episodes.value = Event.Success(episodes)
+                        }
+                    }
+                    is Resource.Error -> {
+                        _episodes.value =
+                            Event.Failure("Something went wrong..\n$episodeResource.message")
+                    }
                 }
             }
         }
